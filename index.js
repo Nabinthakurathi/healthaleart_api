@@ -3,8 +3,11 @@ const mongoose = require("mongoose");
 const morgan = require('morgan');
 const dotenv = require('dotenv').config();
 const cors = require('cors');
-const router = express.Router();
+const userRouter = require('./routes/users');
+const uploadRouter = require('./routes/upload');
 const auth = require('./auth');
+const router = express.Router();
+
 
 
 const app = express();
@@ -19,6 +22,9 @@ mongoose.connect(process.env.URL, {useNewUrlParser: true, useUnifiedTopology: tr
 .then((db) =>{
     console.log("successfully connected to MOngoDB Server");
 },(err)=> console.log(err));
+
+app.use('/users', userRouter);
+app.use('/upload', uploadRouter);
 
 
 app.use(auth.verifyUser);

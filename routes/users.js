@@ -6,11 +6,12 @@ const router = express.Router();
 const auth = require('../auth');
 
 router.post('/signup', (req, res, next) => {
+    console.log(req.body)
         let password = req.body.password;
     bcrypt.hash(password, 10, function (err, hash) {
         if (err) {
             let err =  new Error('Could not hash!');
-		err.status = 500;
+		err.status = 400;
 		return next(err);
         }
         User.create({
